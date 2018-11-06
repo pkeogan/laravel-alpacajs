@@ -34,40 +34,20 @@
 
 var lastAlpacaModelID;
 
+@if(! isset($postRenderSource))
   $("#{{ $id }}").alpaca({
     @if(isset($schema))"schema": {!! $schema !!}, @endif
     @if(isset($options))"options": {!! $options !!}, @endif
-    @if(isset($postRender))"postRender": {!! $postRender !!}, @endif
+    @if(isset($postRender2))"postRender": function(control){ {!! $postRender !!} }, @endif
+    @if(isset($schemaSource))"schemaSource": "{{ $schemaSource }}", @endif
+    @if(isset($optionsSource))"optionsSource": "{{ $optionsSource }}", @endif
+    @if(isset($postRenderSource))"postRenderSource": function(control){ {{ $postRenderSource }} }, @endif
   });
+@else
 
-      jQuery.fn.extend({
-        alapcaErrors: function (message) {
-          array = JSON.parse(message);
-          $.each(array, function( index, value ) {
-            var name = index;
-            $('[name='+index+']').closest('.form-group').addClass('has-error');
-              $.each(value, function( key, errmsg ){
-                var error = '<div class="help-block alpaca-message alpaca-message-notOptional"><i class="glyphicon glyphicon-exclamation-sign"></i>'+errmsg+'</div>';
-                $('[name='+name+']').after(error);
-               });
-              });
-        }
-    });
+$(document).alpacaCreateWithPostRenderSource( '{{$id}}', '{{$schemaSource}}', '{{$optionsSource}}', '{{$postRenderSource}}' );
 
-        jQuery.fn.extend({
-        formatErrors: function (message) {
-                    var formated = '';
-          array = JSON.parse(message);
-          $.each(array, function( index, value ) {
-            var name = index;
-              $.each(value, function( key, errmsg ){
-                    formated += '<b>'+name+'</b><p>' + errmsg + '</p>';
-               });
-              });
-              return formated;
-        }
-    });
-
+@endif
 
   @if($openModalAndLoad)
 
@@ -88,8 +68,8 @@ var lastAlpacaModelID;
                 $("#{{$id}}-modal").modal('show');  
             },
             error: function(XMLHttpRequest, textStatus, errorThrown) {
-                swal('Error', XMLHttpRequest.responseJSON.message,'error');
-            },
+				$(document).handleError(XMLHttpRequest);
+			},
          });
         }
     });
@@ -126,6 +106,7 @@ var lastAlpacaModelID;
       contentType: "application/json",
       processData: false,
       success: function(data) {
+@if(isset($calendar['refresh'])) $('#calendar').fullCalendar('refetchEvents'); @endif
           $("table[id*=datatable]").DataTable().ajax.reload(null, false);
           $('.modal').modal('hide');
           $("[data-overlay-loader]").remove();
@@ -137,10 +118,7 @@ var lastAlpacaModelID;
               });
       },
       error: function(XMLHttpRequest, textStatus, errorThrown) {
-            $(document).alapcaErrors(XMLHttpRequest.responseJSON.message);
-             $("[data-overlay-loader]").remove();
-        swal('Error', $(document).formatErrors(XMLHttpRequest.responseJSON.message),'error');
-
+       	$(document).handleError(XMLHttpRequest);
       },
     });
   });
@@ -164,6 +142,8 @@ var lastAlpacaModelID;
       contentType: "application/json",
       processData: false,
       success: function(data) {
+     @if(isset($calendar['refresh'])) $('#calendar').fullCalendar('refetchEvents'); @endif
+
           $("table[id*=datatable]").DataTable().ajax.reload(null, false);
           $('.modal').modal('hide'); 
           $("[data-overlay-loader]").remove();
@@ -175,9 +155,7 @@ var lastAlpacaModelID;
               });
       },
       error: function(XMLHttpRequest, textStatus, errorThrown) {
-        $(document).alapcaErrors(XMLHttpRequest.responseJSON.message);
-         $("[data-overlay-loader]").remove();
-        swal('Error', $(document).formatErrors(XMLHttpRequest.responseJSON.message),'error');
+		$(document).handleError(XMLHttpRequest);
       },
     });
   });

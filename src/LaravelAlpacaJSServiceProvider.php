@@ -37,7 +37,7 @@ class LaravelAlpacaJSServiceProvider extends ServiceProvider
     public function boot()
     {
         //Load our helper class
-        require_once(base_path('vendor\pkeogan\laravel-alpacajs\src\helpers\alpacajshelpers.php'));
+        require_once(base_path('vendor/pkeogan/laravel-alpacajs/src/helpers/alpacajshelpers.php'));
 
       //Publish Config File
         $this->publishes([

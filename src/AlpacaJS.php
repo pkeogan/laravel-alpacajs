@@ -167,6 +167,21 @@ class AlpacaJS
     return $this;
   }
 
+	
+  public function selfAssign()
+  {
+    $this->type = 'modal';
+    $this->data = config('alpacajs.selfassign');
+    return $this;
+  }
+	
+  public function add()
+  {
+    $this->type = 'modal';
+    $this->data = config('alpacajs.add');
+    return $this;
+  }
+	
   public function edit($route)
   {
     $this->type = 'modal';
@@ -221,14 +236,14 @@ class AlpacaJS
   public function data($input)
   {
   	if(is_null($this->data['data'])){
-      $this->data['data'] = $input;
+      	$this->data['data'] = $input;
     } else {
-      $this->data['data'] = array_merge($this->data['data'], $input);
+      	$this->data['data'] = array_merge($this->data['data'], $input);
     }
-    return $this;
-    $this->data['data'] = $input;
-    return $this;
-  }
+		return $this;
+		$this->data['data'] = $input;
+		return $this;
+  	}
 
   
   public function compile()

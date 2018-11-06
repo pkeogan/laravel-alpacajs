@@ -3,7 +3,7 @@
     "description": "A package to build AlpacaJS forms via Laravel.",
     "keywords": ["laravel", "alpaca", "alpacajs"],
     "license": "MIT",
-    "version": "dev-master",
+    "version": "1.0",
     "authors": [
         {
             "name": "Peter Keogan",

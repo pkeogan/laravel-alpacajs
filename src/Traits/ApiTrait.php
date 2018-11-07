@@ -109,21 +109,27 @@ trait ApiTrait
 		}
 	}
 	
+  //get the models partent's uuid
 	public function getParentModelUuidAttribute()
 	{
-		if(($child_uuid = config('alpacajs.model-data.' . class_basename($this) . ".child_uuid", false) || 
-		   $child_id = config('alpacajs.model-data.' . class_basename($this) . ".child_id", false) )
-		   && $child = config('alpacajs.model-data.' . class_basename($this) . ".child", false) )
-		{		
-			
-		if(isset($child_uuid) && $child_uuid){
-			$child = $child::findByUUID($this->attributes[config('alpacajs.model-data.' . class_basename($this) . ".child_uuid", false)]);
-		}elseif(isset($child_id) && $child_id){
-			$child = $child::find($this->attributes[config('alpacajs.model-data.' . class_basename($this) . ".child_id", false)]);	
-		}
-		return $child->uuid;
+      $child_uuid = config('alpacajs.model-data.' . class_basename($this) . ".child_uuid", false);
+      $child_id = config('alpacajs.model-data.' . class_basename($this) . ".child_id", false);
+      $child = config('alpacajs.model-data.' . class_basename($this) . ".child", false);
 
-		} 
+			
+		if($child_uuid && $child){
+			$child = $child::findByUUID($this->attributes[$child_uuid]);
+		}
+
+    if($child_id && $child){
+			$child = $child::find($this->attributes[$child_id]);	
+		}
+    
+
+    if($child != null){
+      return $child->uuid;
+    }
+
 		return null;
 	}
 	
@@ -305,13 +311,13 @@ trait ApiTrait
 		if($this->exists)
 		{
 			//
-			if($parent_class = config('alpacajs.model-data.' . class_basename($this) . '.parent', false)){
-				if($schema_temp = config('alpacajs.model-defaults.' . class_basename($parent_class) . '.schema', false)){ 
+			if($parent_class = config('alpacajs.model-data.' . class_basename($this) . '.parent', [])){
+				if($schema_temp = config('alpacajs.model-defaults.' . class_basename($parent_class) . '.schema', [])){ 
 					$default = $schema_temp;
 				}
 			}
 		} else {
-			if($schema_temp = config('alpacajs.model-defaults.' . class_basename($this) . '.schema', false)){ 
+			if($schema_temp = config('alpacajs.model-defaults.' . class_basename($this) . '.schema', [])){ 
 				$default = $schema_temp;
 			}
 		}
@@ -320,8 +326,7 @@ trait ApiTrait
 		if($this->exists && isset($this->data['schema']) && $this->data['schema'] != null){ 
 			$schema = json_decode($this->data['schema'], true);
 		}
-
-		return $schema;
+		return array_merge($schema, $default);
 	}
 	
 	//get the models parent schema
@@ -331,18 +336,18 @@ trait ApiTrait
 		if($this->exists)
 		{
 			//check if this model has a child model, if so we need to grab the all the schema from that aswell so the data will be displated
-			if($child = config('alpacajs.model-data.' . class_basename($this) . '.child', false)){ 
-				if($uuid = config('alpacajs.model-data.' . class_basename($this) . '.child_uuid', false)){ 
+			if($child = config('alpacajs.model-data.' . class_basename($this) . '.child', [])){ 
+				if($uuid = config('alpacajs.model-data.' . class_basename($this) . '.child_uuid', [])){ 
 					$child = $child::findByUUID($uuid);
 				}
-					if($id = config('alpacajs.model-data.' . class_basename($this) . '.child_id', false)){ 
+					if($id = config('alpacajs.model-data.' . class_basename($this) . '.child_id', [])){ 
 					$child = $child::find($this[$id]);
 				}
 				return $child->getSchema();
 			}
 			
 			//check if this model has defined schema
-			if($schema_temp = config('alpacajs.model-defaults.' . class_basename($this) . '.schema', false)){ 
+			if($schema_temp = config('alpacajs.model-defaults.' . class_basename($this) . '.schema', [])){ 
 				return $schema_temp;
 			}
 			

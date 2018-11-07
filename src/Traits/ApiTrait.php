@@ -363,13 +363,13 @@ trait ApiTrait
 	{
 		$default = array();	
 		$options = array();
-		if($this->exists && $parent_class = config('alpacajs.model-data.' . class_basename($this) . '.parent', false))
+		if($this->exists && $parent_class = config('alpacajs.model-data.' . class_basename($this) . '.parent', []))
 		{
-			if($options_temp = config('alpacajs.model-defaults.' . class_basename($parent_class) . '.options', false)){ 
+			if($options_temp = config('alpacajs.model-defaults.' . class_basename($parent_class) . '.options', [])){ 
 				$default = $options_temp;
 			}
 		} else {
-			if($options_temp = config('alpacajs.model-defaults.' . class_basename($this) . '.options', false)){ 
+			if($options_temp = config('alpacajs.model-defaults.' . class_basename($this) . '.options', [])){ 
 				$default = $options_temp;
 			}
 		}

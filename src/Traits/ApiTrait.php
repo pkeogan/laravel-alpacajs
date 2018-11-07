@@ -317,10 +317,10 @@ trait ApiTrait
 		}
 
 		
-		if($this->exists || isset($this->data['schema'])){ 
+		if($this->exists && isset($this->data['schema'] && $this->data['schema'] != null) ){ 
 			$schema = json_decode($this->data['schema'], true);
 		}
-		$schema = array_merge($default, $schema);
+
 		return $schema;
 	}
 	
@@ -369,7 +369,7 @@ trait ApiTrait
 			}
 		}
 		
-		if($this->exists || isset($this->data['options'])){ 
+		if($this->exists && isset($this->data['options']) && $this->data['options'] != null){ 
 			$options = json_decode($this->data['options'], true);
 		}
 		

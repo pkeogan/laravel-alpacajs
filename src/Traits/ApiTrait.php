@@ -317,7 +317,7 @@ trait ApiTrait
 		}
 
 		
-		if($this->exists && isset($this->data['schema'] && $this->data['schema'] != null) ){ 
+		if($this->exists && isset($this->data['schema']) && $this->data['schema'] != null){ 
 			$schema = json_decode($this->data['schema'], true);
 		}
 

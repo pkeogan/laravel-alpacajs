@@ -112,7 +112,6 @@ trait ApiTrait
   //get the models partent's uuid
 	public function getParentModelUuidAttribute()
 	{
-    if($this->exist){
         $child_uuid = config('alpacajs.model-data.' . class_basename($this) . ".child_uuid", false);
         $child_id = config('alpacajs.model-data.' . class_basename($this) . ".child_id", false);
         $child = config('alpacajs.model-data.' . class_basename($this) . ".child", false);
@@ -130,7 +129,7 @@ trait ApiTrait
       if($child != null){
         return $child->uuid;
       }
-    }
+    
 
 		return null;
 	}

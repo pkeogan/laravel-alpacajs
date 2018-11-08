@@ -112,22 +112,24 @@ trait ApiTrait
   //get the models partent's uuid
 	public function getParentModelUuidAttribute()
 	{
-      $child_uuid = config('alpacajs.model-data.' . class_basename($this) . ".child_uuid", false);
-      $child_id = config('alpacajs.model-data.' . class_basename($this) . ".child_id", false);
-      $child = config('alpacajs.model-data.' . class_basename($this) . ".child", false);
+    if($this->exist){
+        $child_uuid = config('alpacajs.model-data.' . class_basename($this) . ".child_uuid", false);
+        $child_id = config('alpacajs.model-data.' . class_basename($this) . ".child_id", false);
+        $child = config('alpacajs.model-data.' . class_basename($this) . ".child", false);
 
-			
-		if($child_uuid && $child){
-			$child = $child::findByUUID($this->attributes[$child_uuid]);
-		}
 
-    if($child_id && $child){
-			$child = $child::find($this->attributes[$child_id]);	
-		}
-    
+      if($child_uuid && $child){
+        $child = $child::findByUUID($this->attributes[$child_uuid]);
+      }
 
-    if($child != null){
-      return $child->uuid;
+      if($child_id && $child){
+        $child = $child::find($this->attributes[$child_id]);	
+      }
+
+
+      if($child != null){
+        return $child->uuid;
+      }
     }
 
 		return null;

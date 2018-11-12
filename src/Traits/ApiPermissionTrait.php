@@ -80,9 +80,11 @@ trait ApiPermissionTrait
 		} 
 
 		//check model for permisssion and if user has it
-		if($this->exists && $permission = $this->getPermissionFromActionName($action) && auth()->user()->can($permission))
+		if($this->exists && $permission = $this->getPermissionFromActionName($action))
 		{
-		   return true;
+      if(auth()->user()->can($permission)){
+        return true;
+      }
 		}
 		//if the model has a child, check within the child model to see if it do the action
 		if($this->exists && $child = config('alpacajs.model-data.' . class_basename($this) . '.child', false))

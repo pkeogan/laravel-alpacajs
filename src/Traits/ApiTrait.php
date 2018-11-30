@@ -16,6 +16,20 @@ trait ApiTrait
 	use ApiPermissionTrait;
 	//checks, vaildates, and then creates and returns a model. False given if ever gone wrong.
 	
+  
+  //get a value from a models config
+  public function getConfigValue($input)
+  {
+    if(isset($this->attributes['config'])){
+      if(isset($this->config[$input])){
+        return $this->config[$input];
+      }
+		}
+    return null;
+  }
+  
+  
+  
 	// get data from the models config via dot notation
 	public function config($input)
 	{

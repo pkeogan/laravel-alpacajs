@@ -60,6 +60,4 @@
 <style>.select2-selection__rendered{margin-top: 0px !important;}</style>
 @endpushonce
 
-@pushonce('scripts:select2')
-<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.1/js/select2.min.js" integrity="sha256-190Fv8aJAduyyIOnvWVpjCmzkX1h8OEtGWbcoU1QVsA=" crossorigin="anonymous"></script>
-@endpushonce
+

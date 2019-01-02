@@ -74,7 +74,7 @@ trait ApiPermissionTrait
 		if(!Auth::check()){ abortJSON(400, "You are not logged in"); }
 		//check config for permisison and if user has it
 		$defaults = config('alpacajs.model-permissions.'. class_basename($this), false);
-		if($defaults &&  isset($defaults[$action])  && Auth::user()->hasPermission($defaults[$action]))
+		if($defaults &&  isset($defaults[$action])  && Auth::user()->hasPermissionTo($defaults[$action]))
 		{
 			return true;
 		} 

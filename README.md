@@ -1,4 +1,4 @@
-# laravel-alpacajs 1.2
+# laravel-alpacajs
 A package to build AlpacaJS forms via laravel
 
 

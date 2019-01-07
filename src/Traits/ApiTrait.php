@@ -136,6 +136,10 @@ trait ApiTrait
       }
 
       if($child_id && $child){
+        if(!isset($this->attributes[$child_id]))
+        {
+          return null;
+        }
         $child = $child::find($this->attributes[$child_id]);	
       }
 

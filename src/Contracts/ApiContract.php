@@ -13,7 +13,7 @@ interface ApiContract
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public static function findByUuid(String $uuid);
+    public static function findByUuid($uuid);
             
 	public function checkValidateAndCreate(Request $request);
 	public function checkValidateAndUpdate(Request $request);

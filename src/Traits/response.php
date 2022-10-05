@@ -9,6 +9,7 @@ use \Ramsey\Uuid\Uuid;
 /**
  * Trait build
  */
+ 
 trait Response
 {
     public function build()

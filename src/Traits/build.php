@@ -9,6 +9,7 @@ use App\Exceptions\GeneralException;
 /**
  * Trait build
  */
+ 
 trait Build
 {    
 	public function build()
